@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  inputdata: |
+    1, 30920
+    2, 5280
+    3, 7434
+    4, 9424
+    5, 27171
+    6, 20439
+    7, 24657
+    8, 32039
+    9, 9674
+    10, 4777
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: csvserver-input

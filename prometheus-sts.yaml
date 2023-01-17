@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: prometheus
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      volumes:
+      - name: promconfig-vol
+        configMap:
+          name: prometheus-cm
+      containers:
+      - image: prom/prometheus
+        name: prometheus
+        volumeMounts:
+        - mountPath: /etc/prometheus/prometheus.yml
+          subPath: prometheus.yml
+          name: promconfig-vol
+        - mountPath: /prometheus
+          name: prometheus-data
+  volumeClaimTemplates:
+  - metadata:
+      name: prometheus-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi    
+            
